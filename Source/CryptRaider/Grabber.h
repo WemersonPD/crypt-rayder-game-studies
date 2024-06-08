@@ -42,4 +42,6 @@ private:
 	float HoldDistance = 200;
 
 	UPhysicsHandleComponent *GetPhysicsHandle() const;
+	bool HasHit(FHitResult &HitResult) const;
+	void GrabComponent(const FHitResult &HitResult);
 };

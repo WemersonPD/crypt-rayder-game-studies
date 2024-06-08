@@ -68,8 +68,16 @@ void UGrabber::Release()
 		return;
 	}
 
+	// Start the physics simulation
 	GrabbedComponent->WakeAllRigidBodies();
+
+	// Removing the tag from the released object
+	AActor *OwnerActor = GrabbedComponent->GetOwner();
+	OwnerActor->Tags.Remove("Grabbed");
+
+	// Release the grabbed object
 	PhysicsHandle->ReleaseComponent();
+
 	UE_LOG(LogTemp, Display, TEXT("Released"));
 }
 
@@ -100,6 +108,8 @@ void UGrabber::GrabComponent(const FHitResult &HitResult)
 
 	UPrimitiveComponent *HitComponent = HitResult.GetComponent();
 	HitComponent->WakeAllRigidBodies();
+	// Adding a tag to the grabbed object
+	HitComponent->GetOwner()->Tags.Add("Grabbed");
 
 	PhysicsHandle->GrabComponentAtLocationWithRotation(
 		HitComponent,

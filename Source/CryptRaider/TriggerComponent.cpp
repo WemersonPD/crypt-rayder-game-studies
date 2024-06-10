@@ -24,12 +24,13 @@ void UTriggerComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
     AActor *KeyActor = GetAcceptableActor();
     if (KeyActor == nullptr)
     {
-        UE_LOG(LogTemp, Display, TEXT("Acceptable Actor Not Found"));
+        // UE_LOG(LogTemp, Display, TEXT("Acceptable Actor Not Found"));
+        // No acceptable actor found
 
+        // Return the Mover to the original position
+        Mover->SetShouldMove(false);
         return;
     }
-
-    UE_LOG(LogTemp, Display, TEXT("Acceptable Actor Found"));
 
     // Get the Key Component to disable physics
     UPrimitiveComponent *KeyComponent = Cast<UPrimitiveComponent>(KeyActor->GetRootComponent());

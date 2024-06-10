@@ -37,5 +37,5 @@ private:
 
 	FVector StartLocation;
 
-	void StartMovement(float DeltaTime);
+	void StartMovement(FVector TargetLocation, float DeltaTime);
 };

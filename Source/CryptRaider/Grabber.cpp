@@ -74,6 +74,7 @@ void UGrabber::Release()
 	// Removing the tag from the released object
 	AActor *OwnerActor = GrabbedComponent->GetOwner();
 	OwnerActor->Tags.Remove("Grabbed");
+	OwnerActor->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 
 	// Release the grabbed object
 	PhysicsHandle->ReleaseComponent();
@@ -108,8 +109,11 @@ void UGrabber::GrabComponent(const FHitResult &HitResult)
 
 	UPrimitiveComponent *HitComponent = HitResult.GetComponent();
 	HitComponent->WakeAllRigidBodies();
+
 	// Adding a tag to the grabbed object
 	HitComponent->GetOwner()->Tags.Add("Grabbed");
+	// Silulate physics
+	HitComponent->SetSimulatePhysics(true);
 
 	PhysicsHandle->GrabComponentAtLocationWithRotation(
 		HitComponent,
